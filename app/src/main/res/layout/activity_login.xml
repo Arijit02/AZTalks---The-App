@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@drawable/login">
+
+    <ImageView
+        android:id="@+id/login_icon"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:src="@drawable/logo"
+        android:scaleType="centerInside"
+        android:layout_marginTop="30dp">
+    </ImageView>
+
+    <EditText
+        android:id="@+id/login_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="170dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:hint="E-mail"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/email"
+        android:background="@drawable/inputs"/>
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:layout_marginTop="245dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:hint="Password"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/password"
+        android:background="@drawable/inputs"/>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="320dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:background="@drawable/button"
+        android:text="LOGIN"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/register_account_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="395dp"
+        android:text="Don't have an account, Need new Account ?"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="15dp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/login_with"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="425dp"
+        android:text="or Login with"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="15dp"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/login_with">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="85dp"
+            android:src="@drawable/facebook"
+            android:id="@+id/facebook_sign_in"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp">
+        </ImageView>
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="120dp"
+            android:src="@drawable/twitter"
+            android:id="@+id/twitter_sign_in"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"
+            >
+        </ImageView>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginLeft="0dp"
+            android:id="@+id/google_sign_in"
+            android:src="@drawable/google"></ImageView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

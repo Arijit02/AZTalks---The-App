@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "213359793581",
+    "firebase_url": "https://aztalks-f73c8.firebaseio.com",
+    "project_id": "aztalks-f73c8",
+    "storage_bucket": "aztalks-f73c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213359793581:android:e7a5b3cc65227348497d24",
+        "android_client_info": {
+          "package_name": "com.arijit.socialnetwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213359793581-mauj4imhstbchm9hrmpgt2vn5nc1puld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAshqUQjs96v9bRBbvdOiZLOaHV3s5s8MU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213359793581-mauj4imhstbchm9hrmpgt2vn5nc1puld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
