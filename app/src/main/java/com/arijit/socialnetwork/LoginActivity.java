@@ -17,8 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private ImageView googleSignInButton;
 
-    private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
+    private GoogleApiClient mGoogleSignInClient;
 
     private final static String TAG = "LoginActivity";
 
@@ -80,7 +83,21 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, GoogleApiClient.OnConnectionFailedListener)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Toast.makeText(LoginActivity.this, "Connection to google account failed!", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
 
     }
 
@@ -94,26 +111,52 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-
+            LoadingBar.setTitle("Google SignIn");
+            LoadingBar.setMessage("Please wait, while we are allowing you to login using your google account.");
+            LoadingBar.setCanceledOnTouchOutside(true);
+            LoadingBar.show();
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if(result.isSuccess()){
+                GoogleSignInAccount account = result.getSignInAccount();
+                firebaseAuthWithGoogle(account);
+                Toast.makeText(LoginActivity.this, "Please wait while we are getting your auth result", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(LoginActivity.this, "Can't get Auth result", Toast.LENGTH_LONG).show();
+                LoadingBar.dismiss();
+            }
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
+                            LoadingBar.dismiss();
+                            SendUserToMainActivity();
                         }
                         else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            String message = task.getException().getMessage();
+                            Toast.makeText(LoginActivity.this, "Not authenticated, error occurred: " + message, Toast.LENGTH_LONG).show();
+                            LoadingBar.dismiss();
+                            SendUserToLoginActivity();
                         }
 
                         // ...
                     }
                 });
+    }
+
+    private void SendUserToLoginActivity() {
+        Intent selfIntent  = new Intent(LoginActivity.this, LoginActivity.class);
+        selfIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(selfIntent);
+        finish();
     }
 
     @Override
